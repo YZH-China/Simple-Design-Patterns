@@ -54,7 +54,7 @@ var BookFanctory = (function(){
 var BookRecordManager = (function(){
 	var bookRecordDatabase = {};
 	/* 添加借书记录 */
-	addBookRecord: function(id, title, author, genre,pageCount,publisherID,ISBN, checkoutDate, checkoutMember, dueReturnDate, availability){
+	function addBookRecord (id, title, author, genre,pageCount,publisherID,ISBN, checkoutDate, checkoutMember, dueReturnDate, availability){
 		var book = BookFanctory.createBook(title, author, genre,pageCount,publisherID,ISBN);
 		bookRecordDatabase[id] = {
 			checkoutMember: checkoutMember,
@@ -63,21 +63,21 @@ var BookRecordManager = (function(){
 			availability: availability,
 			book: book
 		};
-	},
+	}
 
-	updateCheckoutStatus: function(bookId, newStatus, checkoutDate, checkoutMember, newRetrunDate){
+	function updateCheckoutStatus (bookId, newStatus, checkoutDate, checkoutMember, newRetrunDate){
 		var record = bookRecordDatabase[bookId];
 		record.availability = newStatus;
 		record.checkoutDate = checkoutDate;
 		record.checkoutMember = checkoutMember;
 		record.dueReturnDate = newRetrunDate;
-	},
+	}
 
-	extendCheckoutPeriod: function(bookID, newReturnDate){
+	function extendCheckoutPeriod (bookID, newReturnDate){
 		bookRecordDatabase[bookID].dueReturnDate = newRetrunDate;
-	},
+	}
 
-	isPastDue: function(bookId){
+	function isPastDue (bookId){
 		var currentDate = new Date();
 		return currentDate.getTime() > Date.parse(bookRecordDatabase[bookId].dueReturnDate);
 	}
